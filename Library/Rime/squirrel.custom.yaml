@@ -1,0 +1,3 @@
+patch:
+  # stacked | linear | tabled 候选项排列方向(如果希望水平，设置linear)
+  style/candidate_list_layout: linear
