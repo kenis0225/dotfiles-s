@@ -14,36 +14,14 @@ fish_add_path ~/Documents/software/nvim-macos-arm64/bin
 # -------- vi mode --------
 # set -g fish_key_bindings fish_vi_key_bindings
 
-# -------- alias --------
-function n
-  nvim $argv
-end
-
-function g
-  lazygit $argv
-end
-
-function y
-  set tmp (mktemp -t "yazi-cwd.XXXXXX")
-  yazi $argv --cwd-file="$tmp"
-  if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-    builtin cd -- "$cwd"
-  end
-  rm -f -- "$tmp"
-end
-
-function ls
-  eza --color=always --icons --group-directories-first $argv
-end
-
-function ll
-  eza -la --color=always --icons --group-directories-first $argv
-end
-
 # -------- application --------
 # if [ -f "/opt/homebrew/bin/brew" ]
 #   /opt/homebrew/bin/brew shellenv | source
 # end
+
+if type -q jj
+  jj util completion fish | source
+end
 
 if type -q starship
   starship init fish | source
@@ -81,4 +59,50 @@ if not type -q nix
   if test -e "$nix_completion_fish_path"
     source "$nix_completion_fish_path"
   end
+end
+
+# -------- alias --------
+function c
+  curl -LO $argv
+end
+
+function f
+  fastfetch $argv
+end
+
+function g
+  lazygit $argv
+end
+
+function l
+  ls -a --color=auto
+end
+
+function n
+  nvim $argv
+end
+
+function o
+  opencode $argv
+end
+
+function s
+  shasum -a 256 $argv
+end
+
+function t
+  tmux $argv
+end
+
+function y
+  set tmp (mktemp -t "yazi-cwd.XXXXXX")
+  yazi $argv --cwd-file="$tmp"
+  if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+    builtin cd -- "$cwd"
+  end
+  rm -f -- "$tmp"
+end
+
+function ze
+  zellij $argv
 end
